@@ -1,0 +1,12 @@
+# Dossiers
+nodes_modules/
+.tmp/
+.vscode/
+dist/
+coverage/
+.vs/
+
+# Fichiers
+webpack.statistics*.html
+.eslintcache
+*.log
