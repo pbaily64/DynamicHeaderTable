@@ -1,5 +1,5 @@
-# Dossiers
-nodes_modules/
+﻿# Dossiers
+node_modules/
 .tmp/
 .vscode/
 dist/
