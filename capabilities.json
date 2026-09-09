@@ -1,0 +1,335 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Columns",
+      "name": "columns",
+      "kind": "GroupingOrMeasure",
+      "description": "Columns and Measures to display in the table"
+    }
+  ],
+  "objects": {
+    "general": {
+      "properties": {
+        "filter": {
+          "type": {
+            "filter": {}
+          }
+        }
+      }
+    },
+    "tableStyle": {
+      "displayName": "Table style",
+      "properties": {
+        "headerBackground": {
+          "displayName": "Header backgound",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "headerFontColor": {
+          "displayName": "Header font color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "headerFontSize": {
+          "displayName": "Header font size",
+          "type": {
+            "numeric": true
+          }
+        },
+        "rowBackground": {
+          "displayName": "Row background (even)",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "rowAltBackground": {
+          "displayName": "Row background (odd)",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "rowFontColor": {
+          "displayName": "Row font color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "rowFontSize": {
+          "displayName": "Row font size",
+          "type": {
+            "numeric": true
+          }
+        },
+        "borderColor": {
+          "displayName": "Border color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "gridLines": {
+          "displayName": "Display grid lines",
+          "type": {
+            "bool": true
+          }
+        }
+      }
+    },
+    "pagination": {
+      "displayName": "Pagination",
+      "properties": {
+        "enabled": {
+          "displayName": "Enable pagination",
+          "type": {
+            "bool": true
+          }
+        },
+        "rowsPerPage": {
+          "displayName": "Row per page",
+          "type": {
+            "numeric": true
+          }
+        }
+      }
+    },
+    "sorting": {
+      "displayName": "Sorting",
+      "properties": {
+        "enabled": {
+          "displayName": "Enable column sorting",
+          "type": {
+            "bool": true
+          }
+        }
+      }
+    },
+    "columnManagement": {
+      "displayName": "Column management",
+      "properties": {
+        "headerLabels": {
+          "displayName": "Header labels (JSON / fx)",
+          "description": "JSON {\"ColumnName\":\"Label\"}. Can be plugged into a DAX measurement via the FX button.",
+          "type": {
+            "text": true
+          }
+        },
+        "orderJson": {
+          "displayName": "Column order (JSON / fx)",
+          "description": "JSON array of column names in the order that the array requires. Ex: [\"Col1\",\"Col2\"]. Columns not mentioned are added at the end. Can be plugged into a DAX measurement via the FX button.",
+          "type": {
+            "text": true
+          }
+        },
+        "hiddenColumns": {
+          "displayName": "Hidden columns in the grid (JSON / fx)",
+          "description": "A JSON array of column names to hide in the grid. Ex: [\"Col1\",\"Col2\"]. These columns remain in the Columns role (so available for filtering/modaling) but are not displayed in the table. Can be plugged into a DAX measurement via the fx button.",
+          "type": {
+            "text": true
+          }
+        },
+        "columnFormats": {
+          "displayName": "Column format (JSON / fx)",
+          "description": "JSON format definition per column. Ex: {\"Col1\":{\"type\":\"date\",\"format\":\"dd/MM/yyyy\"},\"Col2\":{\"type\":\"number\",\"decimals\":2,\"minWidth\":110},\"Col3\":{\"type\":\"boolean\",\"trueLabel\":\"✓\",\"falseLabel\":\"✗\"}}. Can be plugged into a DAX measurement via the fx button.",
+          "type": {
+            "text": true
+          }
+        },
+        "defaultSortJson": {
+          "displayName": "Default sort (JSON / fx)",
+          "description": "JSON array of sort specs applied when no manual sort is active. Ex: [{\"column\":\"Col1\",\"dir\":\"DESC\"},{\"column\":\"Col2\",\"dir\":\"ASC\"}]. Clicking a header overrides it. Can be plugged into a DAX measure via the fx button.",
+          "type": {
+            "text": true
+          }
+        },
+        "cfEnabled": {
+          "displayName": "Enable conditional formatting",
+          "type": {
+            "bool": true
+          }
+        },
+        "cfRulesJson": {
+          "displayName": "Rules (JSON)",
+          "type": {
+            "text": true
+          }
+        }
+      }
+    },
+    "modalDetail": {
+      "displayName": "Detail of the modal",
+      "properties": {
+        "enabled": {
+          "displayName": "Enable the click-to-click modal",
+          "type": {
+            "bool": true
+          }
+        },
+        "width": {
+          "displayName": "Width (px, 0 = maximum autorisé par l'hôte)",
+          "type": {
+            "numeric": true
+          }
+        },
+        "height": {
+          "displayName": "Height (px, 0 = maximum autorisé par l'hôte)",
+          "type": {
+            "numeric": true
+          }
+        },
+        "titleText": {
+          "displayName": "Modale title (text / fx)",
+          "description": "Detail window title text. Can be plugged into a DAX measurement via the fx button. If empty, the title takes the value of the first visible column of the clicked row.",
+          "type": {
+            "text": true
+          }
+        },
+        "debugMode": {
+          "displayName": "Debug mode (afficher les dimensions)",
+          "description": "Temporary diagnostic aid: shows requested vs. actually measured dialog dimensions at the top of the modal. Disable once the sizing issue is resolved.",
+          "type": {
+            "bool": true
+          }
+        },
+        "layoutJson": {
+          "displayName": "Layout (JSON / fx)",
+          "description": "Mandatory positional layout of the modal fields. JSON array of three entry types: (1) fields — {\"field\":\"Col1\",\"labelField\":\"Label_Col1\",\"label\":\"Fallback label\",\"row\":1,\"col\":1,\"colspan\":2,\"rowspan\":1}; \"labelField\" references a column/measure (e.g. dropped in Hidden columns) whose per-row VALUE is used as the label — the recommended way to handle multilingual labels via DAX (_langue_active pattern), resolved before the static \"label\" and before headerLabels. (2) dividers — {\"type\":\"divider\",\"row\":4,\"label\":\"Section title\"}; reserves its whole row (no field/list may share it) and renders a full-width rule with an optional section label, using the existing accent color. (3) lists — {\"type\":\"list\",\"row\":7,\"delimiter\":\";\",\"columns\":[{\"field\":\"NamesMeasure\",\"labelField\":\"LBL_NAME\"},{\"field\":\"TypesMeasure\",\"labelField\":\"LBL_TYPE\"}]}; for one-to-many data (e.g. multiple owners) — each referenced field/measure must return a delimited string (typical CONCATENATEX/FILTER convention); the visual splits every column by \"delimiter\" (default \";\") and renders an aligned mini-table (header row + one row per item, missing items shown as \"—\"). Reserves its whole row like a divider. Only listed fields are displayed (no auto-fallback). Fields may reference any column of the Columns role, including ones hidden in the grid. Empty/default (\"[]\") shows a neutral placeholder; invalid JSON shows an explicit error panel in the modal. Can be plugged into a DAX measurement via the fx button.",
+          "type": {
+            "text": true
+          }
+        },
+        "modalFieldFormats": {
+          "displayName": "Modal fields format (JSON / fx)",
+          "description": "JSON format specific to the modal fields, independent of the grid format. Ex: {\"Col1\":{\"type\":\"date\",\"format\":\"dd MMMM yyyy\"}}. Can be plugged into a DAX measurement via the fx button.",
+          "type": {
+            "text": true
+          }
+        }
+      }
+    },
+    "rowSelection": {
+      "displayName": "Line selection",
+      "properties": {
+        "enabled": {
+          "displayName": "Enable line selection",
+          "type": {
+            "bool": true
+          }
+        },
+        "borderColor": {
+          "displayName": "Border color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "borderWidth": {
+          "displayName": "Border width (px)",
+          "type": {
+            "numeric": true
+          }
+        },
+        "backgroundColor": {
+          "displayName": "Background color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "backgroundOpacity": {
+          "displayName": "Background opacity (0-100 %)",
+          "type": {
+            "numeric": true
+          }
+        },
+        "filterKey": {
+          "displayName": "Key column (source)",
+          "description": "The name of the column in the table whose value serves as the click filter key. Can be hidden in the grid.",
+          "type": {
+            "text": true
+          }
+        },
+        "targetTable": {
+          "displayName": "Target table",
+          "description": "The exact name of the Power BI table to filter",
+          "type": {
+            "text": true
+          }
+        },
+        "targetColumn": {
+          "displayName": "Target column",
+          "description": "The name of the column in the target table on which to apply the Basic filter.",
+          "type": {
+            "text": true
+          }
+        },
+        "rowFilterEnabled": {
+          "displayName": "Enable row filter",
+          "type": {
+            "bool": true
+          }
+        },
+        "rowFilterJson": {
+          "displayName": "Filter rules (JSON / fx)",
+          "description": "Display-only filter: rows matching the rules are removed from the grid, sorting and pagination — no filter is sent to the model. JSON array, rules combined with AND. Ex: [{\"column\":\"Status\",\"mode\":\"exclude\",\"values\":[\"Deleted\",\"Cancelled\"]}]. \"mode\" is \"exclude\" (default) or \"include\". The column may be hidden in the grid. Can be plugged into a DAX measure via the fx button.",
+          "type": {
+            "text": true
+          }
+        }
+      }
+    }
+  },
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "for": {
+            "in": "columns"
+          },
+          "dataReductionAlgorithm": {
+            "window": {
+              "count": 30000
+            }
+          }
+        }
+      }
+    }
+  ],
+  "supportsHighlight": true,
+  "supportsKeyboardFocus": true,
+  "supportsSynchronizingFilterState": true,
+  "sorting": {
+    "default": {}
+  },
+  "privileges": []
+}
