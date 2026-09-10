@@ -7,7 +7,7 @@
     "version": "2.2.8.0",
     "description": "Visual Table with DAX dynamic headers, native dialog detail modal (positional layout), hidden columns, custom order.",
     "supportUrl": "https://powerbi.microsoft.com",
-    "gitHubUrl": "https://github.com"
+    "gitHubUrl": "https://github.com/pbaily64/DynamicHeaderTable"
   },
   "apiVersion": "5.11.0",
   "author": { "name": "Baily Patrick", "email": "patrick.baily@nn.be" },

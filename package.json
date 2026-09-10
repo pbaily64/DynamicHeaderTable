@@ -1,12 +1,13 @@
 {
   "name": "dynamic-header-table",
-  "description": "Power BI Custom Visual - Dynamic Header Table",
+  "description": "Power BI custom visual - table with DAX-driven column headers and a row detail dialog",
   "version": "2.2.8.0",
   "license": "UNLICENSED",
   "scripts": {
     "package": "pbiviz package && powershell -ExecutionPolicy Bypass -File ./scripts/del_move.ps1",
     "start": "pbiviz start",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "eslint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "powerbi-visuals-api": "^5.11.0",
@@ -22,5 +23,9 @@
   "overrides": {
     "uuid": "^11.1.1",
     "qs": "^6.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pbaily64/DynamicHeaderTable.git"
   }
 }
