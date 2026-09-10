@@ -1,10 +1,10 @@
 {
   "name": "dynamic-header-table",
   "description": "Power BI Custom Visual - Dynamic Header Table",
-  "version": "2.2.7.3",
+  "version": "2.2.8.0",
   "license": "UNLICENSED",
   "scripts": {
-    "package": "pbiviz package && powershell -ExecutionPolicy Bypass -File ./dist/del_move.ps1",
+    "package": "pbiviz package && powershell -ExecutionPolicy Bypass -File ./scripts/del_move.ps1",
     "start": "pbiviz start",
     "lint": "npx eslint ."
   },

@@ -1,30 +1,64 @@
-# del_move.ps1 — renomme le .pbiviz fraîchement généré en DynamicHeaderTable.pbiviz
+# =====================================================================
+# del_move.ps1 - renomme le paquet produit par pbiviz en <name>.pbiviz
+#
+# Aucun nom ni GUID code en dur : les deux sont lus dans pbiviz.json,
+# la seule source de verite du projet. Le script ne se perime donc pas
+# quand un GUID ou un nom change.
+#
+# Fonctionne quel que soit son propre emplacement : il remonte
+# l'arborescence jusqu'au dossier contenant pbiviz.json, puis travaille
+# dans dist\. Utilisable depuis scripts\ comme depuis dist\.
+#
+# Appele par : npm run package
+# =====================================================================
 
-# Le script s'exécute depuis le dossier où il se trouve (dist/)
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
-Set-Location $scriptDir
 
-$target = "DynamicHeaderTable.pbiviz"
-$prefix = "DynamicHeaderTable1A2B3C4D5E6F"
+# --- racine du projet : premier dossier parent contenant pbiviz.json ---
+$racine = $scriptDir
+while (-not (Test-Path (Join-Path $racine "pbiviz.json"))) {
+    $parent = Split-Path -Parent $racine
+    if ([string]::IsNullOrEmpty($parent) -or $parent -eq $racine) {
+        Write-Error "pbiviz.json introuvable en remontant depuis $scriptDir"
+        exit 1
+    }
+    $racine = $parent
+}
 
-# Cherche tous les .pbiviz commençant par le prefix (peu importe la version)
-$candidates = Get-ChildItem -Path $scriptDir -Filter "$prefix*.pbiviz" -File
+# --- identite lue dans pbiviz.json -------------------------------------
+# Trim() absorbe tout espace ou retour a la ligne parasite dans le JSON.
+$pb   = Get-Content (Join-Path $racine "pbiviz.json") -Raw | ConvertFrom-Json
+$nom  = ([string]$pb.visual.name).Trim()
+$guid = ([string]$pb.visual.guid).Trim()
 
-if ($candidates.Count -eq 0) {
-    Write-Error "No file '$prefix*.pbiviz' found in $scriptDir"
+if ([string]::IsNullOrEmpty($nom) -or [string]::IsNullOrEmpty($guid)) {
+    Write-Error "name ou guid absent de pbiviz.json"
     exit 1
 }
 
-# Prend le plus récent (au cas où il y aurait plusieurs versions)
-$source = ($candidates | Sort-Object LastWriteTime -Descending | Select-Object -First 1).Name
+$dist  = Join-Path $racine "dist"
+$cible = Join-Path $dist ($nom + ".pbiviz")
 
-# Supprime l'ancien fichier cible s'il existe
-if (Test-Path $target) {
-    Remove-Item $target -Force
-    Write-Host "Deleted : $target"
+if (-not (Test-Path $dist)) {
+    Write-Error "Dossier dist introuvable : $dist"
+    exit 1
 }
 
-# Renomme le source en target
-Rename-Item -Path $source -NewName $target
-Write-Host "Renamed : $source -> $target"
+# --- paquet a renommer -------------------------------------------------
+$candidats = @(Get-ChildItem -Path $dist -Filter ($guid + "*.pbiviz") -File -ErrorAction SilentlyContinue)
+if ($candidats.Count -eq 0) {
+    Write-Error "Aucun fichier '$guid*.pbiviz' dans $dist"
+    exit 1
+}
 
+# le plus recent, au cas ou plusieurs versions coexistent
+$source = $candidats | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+
+# --- renommage ---------------------------------------------------------
+if (Test-Path $cible) {
+    Remove-Item $cible -Force
+    Write-Host ("Supprime : " + $nom + ".pbiviz")
+}
+
+Rename-Item -Path $source.FullName -NewName ($nom + ".pbiviz")
+Write-Host ("Renomme  : " + $source.Name + "  ->  " + $nom + ".pbiviz")
