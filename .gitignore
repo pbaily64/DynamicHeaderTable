@@ -10,3 +10,7 @@ coverage/
 webpack.statistics*.html
 .eslintcache
 *.log
+
+# Documentation interne - ne jamais publier
+Documentation/
+documentation/
